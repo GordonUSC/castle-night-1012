@@ -160,6 +160,26 @@ html,body{overflow-x:hidden}
 @keyframes vanish{to{opacity:0;transform:translateY(-20px) rotate(10deg) scale(.6)}}
 .appear .pc{animation:appear .6s cubic-bezier(.2,1.3,.4,1) both;animation-delay:calc(var(--i) * 80ms)}
 @keyframes appear{from{opacity:0;transform:translateY(20px) rotate(-10deg) scale(.6)}}
+/* crystal ball */
+.orbstage{display:grid;place-items:center;margin:14px 0 6px}
+.orb{position:relative;width:min(200px,56vw);aspect-ratio:1;max-width:100%;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 35% 30%,#e9f6ff 0,#8fc4e8 12%,#3a5ea8 42%,#1a1f52 72%,#0a0b24 100%);box-shadow:0 0 40px rgba(120,170,255,.45),inset -18px -22px 40px rgba(0,0,0,.55)}
+.orb .fog{position:absolute;inset:-30%;background:conic-gradient(from 0deg,rgba(255,255,255,0),rgba(214,190,255,.55),rgba(255,255,255,0) 30%,rgba(160,220,255,.5) 55%,rgba(255,255,255,0) 75%,rgba(246,217,140,.45));filter:blur(14px);animation:swirl 7s linear infinite;transition:opacity 1.2s}
+.orb .num{position:absolute;inset:0;display:grid;place-items:center;font-family:"Cinzel Decorative",serif;font-weight:900;font-size:clamp(60px,18vw,96px);color:#fff6dc;text-shadow:0 0 18px #f6d98c,0 0 40px #b48cff;opacity:0;transform:scale(.4);transition:opacity 1s .5s,transform 1s .5s cubic-bezier(.2,1.4,.4,1)}
+.orb.clear .fog{opacity:.15}.orb.clear .num{opacity:1;transform:scale(1)}
+.orb.stir .fog{animation-duration:1.2s}
+.orb .glint{position:absolute;left:20%;top:14%;width:26%;height:16%;border-radius:50%;background:rgba(255,255,255,.55);filter:blur(3px);transform:rotate(-30deg)}
+.orbbase{width:min(150px,42vw);height:34px;margin-top:-10px;background:linear-gradient(#c9963a,#6b4514);clip-path:polygon(18% 0,82% 0,100% 100%,0 100%);border-radius:4px}
+@keyframes swirl{to{transform:rotate(360deg)}}
+.pips{display:flex;justify-content:center;gap:8px;margin:6px 0 14px}.pips i{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--gold);transition:background .3s}.pips i.on{background:var(--gold)}
+/* top hats */
+.hats{position:relative;width:min(100%,440px);height:210px;margin:10px auto 4px}
+.slot{position:absolute;bottom:0;width:30%;height:100%;transition:left .32s ease-in-out;cursor:pointer;border:0;background:none;padding:0}
+.slot .hat{position:absolute;left:0;right:0;bottom:0;transition:transform .7s cubic-bezier(.3,1.4,.5,1);z-index:2}
+.slot .bunny{position:absolute;left:12%;right:12%;bottom:8px;opacity:0;transform:translateY(30px);transition:opacity .4s .25s,transform .6s .25s cubic-bezier(.2,1.5,.4,1);z-index:1}
+.slot.lift .hat{transform:translateY(-100px) rotate(-14deg)}
+.slot.lift .bunny{opacity:1;transform:none}
+.hats.busy .slot{cursor:default}
+@media (prefers-reduced-motion:reduce){.orb .fog{animation:none}.slot{transition:none}}
 .noscript-trick{display:block}.js .noscript-trick{display:none}
 .trick-ui{display:none}.js .trick-ui{display:block}
 @media (prefers-reduced-motion:reduce){.title h1,.hero img,.twinkle b{animation:none}.title h1{color:var(--gold-2);background:none}}
@@ -239,6 +259,35 @@ html,body{overflow-x:hidden}
         <div class="row" id="trow"></div>
         <div class="reveal" id="treveal"></div>
         <button class="say" id="tgo">Make my card vanish</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The Crystal Ball</h2>
+    <p class="lede">The Castle's resident ghost, Irma, plays the piano. This ball only reads minds.</p>
+    <div class="trick">
+      <p class="noscript-trick step">Think of a number from 1 to 10. Double it, add 10, cut it in half, then take away the number you started with. The crystal ball says: 5.</p>
+      <div class="trick-ui">
+        <div class="orbstage"><div class="orb" id="orb"><div class="fog"></div><div class="glint"></div><div class="num">5</div></div><div class="orbbase"></div></div>
+        <div class="pips" id="opips" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+        <p class="step" id="ostep" aria-live="polite">Think of any number from 1 to 10. Keep it secret.</p>
+        <div class="reveal" id="oreveal"></div>
+        <button class="say" id="ogo">I have my number</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Find the Rabbit</h2>
+    <p class="lede">One rabbit, three top hats. Keep your eye on him.</p>
+    <div class="trick">
+      <p class="noscript-trick step">With JavaScript on, a rabbit hides under one of three top hats, the hats shuffle, and you pick one.</p>
+      <div class="trick-ui">
+        <div class="hats" id="hats"><button class="slot" data-k="0" aria-label="Hat 1" style="left:0%"><svg class="bunny" viewBox="0 0 90 100" aria-hidden="true"><ellipse cx="32" cy="28" rx="9" ry="27" fill="#fff8ee"/><ellipse cx="58" cy="28" rx="9" ry="27" fill="#fff8ee"/><ellipse cx="32" cy="30" rx="4" ry="19" fill="#f2a7b4"/><ellipse cx="58" cy="30" rx="4" ry="19" fill="#f2a7b4"/><ellipse cx="45" cy="72" rx="30" ry="26" fill="#fff8ee"/><circle cx="35" cy="68" r="4" fill="#24140f"/><circle cx="55" cy="68" r="4" fill="#24140f"/><circle cx="36.5" cy="66.5" r="1.3" fill="#fff"/><circle cx="56.5" cy="66.5" r="1.3" fill="#fff"/><ellipse cx="45" cy="78" rx="4" ry="3" fill="#e57d92"/><circle cx="28" cy="80" r="5" fill="#f7c6cf" opacity=".7"/><circle cx="62" cy="80" r="5" fill="#f7c6cf" opacity=".7"/></svg><svg class="hat" viewBox="0 0 120 110" aria-hidden="true"><ellipse cx="60" cy="98" rx="56" ry="11" fill="#140d09"/><path d="M26 98 L32 18 Q60 8 88 18 L94 98 Z" fill="#1d1410"/><path d="M29 78 L91 78 L92 90 L28 90 Z" fill="#b5242f"/><ellipse cx="60" cy="18" rx="28" ry="7" fill="#2b1f18"/><path d="M40 26 L37 70" stroke="#4a3a30" stroke-width="3" stroke-linecap="round" opacity=".7"/></svg></button><button class="slot" data-k="1" aria-label="Hat 2" style="left:35%"><svg class="bunny" viewBox="0 0 90 100" aria-hidden="true"><ellipse cx="32" cy="28" rx="9" ry="27" fill="#fff8ee"/><ellipse cx="58" cy="28" rx="9" ry="27" fill="#fff8ee"/><ellipse cx="32" cy="30" rx="4" ry="19" fill="#f2a7b4"/><ellipse cx="58" cy="30" rx="4" ry="19" fill="#f2a7b4"/><ellipse cx="45" cy="72" rx="30" ry="26" fill="#fff8ee"/><circle cx="35" cy="68" r="4" fill="#24140f"/><circle cx="55" cy="68" r="4" fill="#24140f"/><circle cx="36.5" cy="66.5" r="1.3" fill="#fff"/><circle cx="56.5" cy="66.5" r="1.3" fill="#fff"/><ellipse cx="45" cy="78" rx="4" ry="3" fill="#e57d92"/><circle cx="28" cy="80" r="5" fill="#f7c6cf" opacity=".7"/><circle cx="62" cy="80" r="5" fill="#f7c6cf" opacity=".7"/></svg><svg class="hat" viewBox="0 0 120 110" aria-hidden="true"><ellipse cx="60" cy="98" rx="56" ry="11" fill="#140d09"/><path d="M26 98 L32 18 Q60 8 88 18 L94 98 Z" fill="#1d1410"/><path d="M29 78 L91 78 L92 90 L28 90 Z" fill="#b5242f"/><ellipse cx="60" cy="18" rx="28" ry="7" fill="#2b1f18"/><path d="M40 26 L37 70" stroke="#4a3a30" stroke-width="3" stroke-linecap="round" opacity=".7"/></svg></button><button class="slot" data-k="2" aria-label="Hat 3" style="left:70%"><svg class="bunny" viewBox="0 0 90 100" aria-hidden="true"><ellipse cx="32" cy="28" rx="9" ry="27" fill="#fff8ee"/><ellipse cx="58" cy="28" rx="9" ry="27" fill="#fff8ee"/><ellipse cx="32" cy="30" rx="4" ry="19" fill="#f2a7b4"/><ellipse cx="58" cy="30" rx="4" ry="19" fill="#f2a7b4"/><ellipse cx="45" cy="72" rx="30" ry="26" fill="#fff8ee"/><circle cx="35" cy="68" r="4" fill="#24140f"/><circle cx="55" cy="68" r="4" fill="#24140f"/><circle cx="36.5" cy="66.5" r="1.3" fill="#fff"/><circle cx="56.5" cy="66.5" r="1.3" fill="#fff"/><ellipse cx="45" cy="78" rx="4" ry="3" fill="#e57d92"/><circle cx="28" cy="80" r="5" fill="#f7c6cf" opacity=".7"/><circle cx="62" cy="80" r="5" fill="#f7c6cf" opacity=".7"/></svg><svg class="hat" viewBox="0 0 120 110" aria-hidden="true"><ellipse cx="60" cy="98" rx="56" ry="11" fill="#140d09"/><path d="M26 98 L32 18 Q60 8 88 18 L94 98 Z" fill="#1d1410"/><path d="M29 78 L91 78 L92 90 L28 90 Z" fill="#b5242f"/><ellipse cx="60" cy="18" rx="28" ry="7" fill="#2b1f18"/><path d="M40 26 L37 70" stroke="#4a3a30" stroke-width="3" stroke-linecap="round" opacity=".7"/></svg></button></div>
+        <p class="step" id="hstep" aria-live="polite">The rabbit is under the middle hat. Watch him closely.</p>
+        <div class="reveal" id="hreveal"></div>
+        <button class="say" id="hgo">Shuffle the hats</button>
       </div>
     </div>
   </section>
@@ -389,6 +438,30 @@ html,body{overflow-x:hidden}
     if(state===0){ row.classList.add('vanish'); tone(523,0,.4,'triangle',.05); setTimeout(function(){ row.classList.remove('vanish'); deal(B); row.classList.add('appear'); step.textContent='I removed one card. Look closely.'; rev.textContent='Your card is gone.'; chime(); var r=go.getBoundingClientRect(); burst(r.left+r.width/2,r.top,40); go.textContent='Do it again'; state=1; },650); }
     else { row.classList.remove('appear'); deal(A); step.textContent="Pick one of these six cards. Don't tap it, just remember it. Got it?"; rev.textContent=''; go.textContent='Make my card vanish'; state=0; }
   });
+
+  /* the crystal ball (the arithmetic always lands on 5) */
+  var orb=document.getElementById('orb'),ogo=document.getElementById('ogo'),ostep=document.getElementById('ostep'),orev=document.getElementById('oreveal'),pips=[].slice.call(document.querySelectorAll('#opips i')),ost=0;
+  var OS=[["Think of any number from 1 to 10. Keep it secret.","I have my number"],["Double it.","Done"],["Add 10.","Done"],["Cut it in half.","Done"],["Now take away the number you started with.","Done"],["Hold the number you have now in your mind. Picture it glowing.","Read my mind"]];
+  function oset(){ ostep.textContent=OS[ost][0]; ogo.textContent=OS[ost][1]; pips.forEach(function(p,i){ p.classList.toggle('on',i<=ost); }); }
+  ogo.addEventListener('click',function(){
+    if(ost<5){ ost++; oset(); orb.classList.add('stir'); setTimeout(function(){ orb.classList.remove('stir'); },500); tone(392+ost*60,0,.35,'sine',.04); return; }
+    if(ost===5){ ost=6; orb.classList.add('stir'); ostep.textContent='The mists are parting...'; ogo.disabled=true;
+      [330,415,494,622,740].forEach(function(f,i){ tone(f,i*.18,.9,'sine',.035); });
+      setTimeout(function(){ orb.classList.remove('stir'); orb.classList.add('clear'); chime(); var r=orb.getBoundingClientRect(); burst(r.left+r.width/2,r.top+r.height/2,50); ostep.textContent='The ball sees it clearly.'; orev.textContent='Your number is 5.'; ogo.disabled=false; ogo.textContent='Read another mind'; },1600); return; }
+    ost=0; orb.classList.remove('clear'); orev.textContent=''; oset();
+  });
+  /* find the rabbit (every hat has a rabbit) */
+  var hats=document.getElementById('hats'),slots=[].slice.call(hats.querySelectorAll('.slot')),hgo=document.getElementById('hgo'),hstep=document.getElementById('hstep'),hrev=document.getElementById('hreveal'),hst=0,pos=['0%','35%','70%'],order=[0,1,2];
+  function place(){ slots.forEach(function(sl,i){ sl.style.left=pos[order.indexOf(i)]; }); }
+  function lift(sl){ sl.classList.add('lift'); var r=sl.getBoundingClientRect(); burst(r.left+r.width/2,r.top+r.height*.4,34); tone(988,0,.3,'triangle',.05); }
+  slots[1].classList.add('lift');
+  hgo.addEventListener('click',function(){
+    if(hst===0){ hst=1; hgo.disabled=true; hats.classList.add('busy'); slots.forEach(function(sl){ sl.classList.remove('lift'); }); hstep.textContent='Eyes on the rabbit...'; hrev.textContent='';
+      var n=0; setTimeout(function sw(){ var a=Math.floor(Math.random()*3),b=(a+1+Math.floor(Math.random()*2))%3,t=order[a]; order[a]=order[b]; order[b]=t; place(); tone(520+Math.random()*200,0,.12,'square',.015); if(++n<9) setTimeout(sw,360); else setTimeout(function(){ hats.classList.remove('busy'); hst=2; hstep.textContent='Tap the hat with the rabbit.'; hgo.hidden=true; },400); },900); return; }
+    slots.forEach(function(sl){ setTimeout(function(){ if(!sl.classList.contains('lift')) lift(sl); },+sl.dataset.k*250); });
+    setTimeout(function(){ chime(); hrev.textContent='Every hat has a rabbit.'; hstep.textContent='At the Castle, you can never lose.'; hgo.textContent='Shuffle again'; hst=0; },800);
+  });
+  slots.forEach(function(sl){ sl.addEventListener('click',function(){ if(hst!==2) return; hst=3; lift(sl); hstep.textContent='You found him!'; hrev.textContent='Sharp eyes.'; hgo.disabled=false; hgo.hidden=false; hgo.textContent='Lift the other two'; }); });
 
   var tabs=[].slice.call(document.querySelectorAll('.tabs button'));
   tabs.forEach(function(b){ b.addEventListener('click',function(){ tabs.forEach(function(x){ x.setAttribute('aria-selected',x===b?'true':'false'); }); document.querySelectorAll('.invite').forEach(function(a){ a.classList.toggle('on',a.id===b.dataset.t); }); tone(740,0,.3,'triangle',.04); }); });
