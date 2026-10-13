@@ -180,6 +180,37 @@ html,body{overflow-x:hidden}
 .slot.lift .bunny{opacity:1;transform:none}
 .hats.busy .slot{cursor:default}
 @media (prefers-reduced-motion:reduce){.orb .fog{animation:none}.slot{transition:none}}
+/* Mason's entrance */
+.marquee{position:relative;margin:18px auto 0;max-width:520px;background:linear-gradient(180deg,#3d0f17,#1d070b);border:2px solid var(--gold);border-radius:18px;padding:22px 18px 20px;text-align:center;box-shadow:0 0 50px rgba(224,176,79,.22),inset 0 0 30px rgba(0,0,0,.5);overflow:hidden}
+.bulbs{display:flex;justify-content:space-between;gap:4px;margin:-8px -6px 12px}
+.bulbs i{width:9px;height:9px;border-radius:50%;background:var(--gold-2);box-shadow:0 0 8px var(--gold-2);animation:bulb 1.2s ease-in-out infinite}
+.bulbs i:nth-child(even){animation-delay:.6s}
+@keyframes bulb{50%{opacity:.25;box-shadow:none}}
+.marquee .sc{color:var(--gold);font-size:15px;letter-spacing:.14em}
+.marquee .clock{font-family:"Cinzel Decorative",serif;font-weight:900;font-size:clamp(30px,8vw,46px);color:var(--gold-2);margin:6px 0 2px;font-variant-numeric:tabular-nums;text-shadow:0 0 20px rgba(246,217,140,.4)}
+.marquee .under{color:var(--cream);font-size:17px;margin:0}
+.stage{position:relative;height:290px;max-width:340px;margin:30px auto 4px}
+.stage .mhat{position:absolute;left:50%;bottom:0;width:150px;transform:translateX(-50%);z-index:3;transition:transform .9s cubic-bezier(.3,1.4,.5,1)}
+.stage.lift .mhat{transform:translateX(-50%) translateY(14px) rotate(-8deg)}
+.stage .mcard{position:absolute;left:50%;bottom:40px;width:120px;aspect-ratio:5/7;max-width:100%;transform:translateX(-50%) translateY(40px) rotateY(180deg);transform-style:preserve-3d;transition:transform 1.4s cubic-bezier(.2,1.2,.3,1) .3s;z-index:2}
+.stage.lift .mcard{transform:translateX(-50%) translateY(-70px) rotateY(0deg)}
+.mcard .f,.mcard .b{position:absolute;inset:0;border-radius:10px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:grid;place-items:center;text-align:center}
+.mcard .f{background:var(--parch);color:var(--ink);border:2px solid #fff6dc;box-shadow:0 0 0 4px var(--parch),0 0 0 5px #c9a86a,0 0 40px rgba(246,217,140,.7)}
+.mcard .f b{display:block;font-family:"Cinzel Decorative",serif;font-size:34px;color:var(--ruby);line-height:1}
+.mcard .f span{font-family:"IM Fell English SC",serif;font-size:19px;display:block;margin-top:6px}
+.mcard .b{transform:rotateY(180deg);background:repeating-linear-gradient(45deg,#7a1a22 0 6px,#5a1018 6px 12px);border:3px solid var(--gold)}
+.wand{display:inline-block;transition:transform .5s}
+.wave .wand{animation:wave .9s ease-in-out}
+@keyframes wave{25%{transform:rotate(-25deg)}60%{transform:rotate(20deg)}}
+.dove{position:fixed;font-size:26px;pointer-events:none;z-index:50;animation:fly 3.2s ease-out forwards}
+@keyframes fly{to{transform:translate(var(--dx),-70vh) rotate(var(--r));opacity:0}}
+.welcome{max-width:520px;margin:6px auto 0;text-align:center;opacity:0;transform:translateY(12px);transition:opacity 1s .9s,transform 1s .9s}
+.stage.lift + .welcome,.welcome.on{opacity:1;transform:none}
+.welcome p{font-size:19px;color:var(--cream);margin:8px 0}
+.welcome .big{font-family:"IM Fell English SC",serif;font-size:clamp(22px,5vw,30px);color:var(--gold-2)}
+.noscript-trick.mason{display:none}
+html:not(.js) .welcome{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.bulbs i,.dove{animation:none}.stage .mcard,.stage .mhat,.welcome{transition:none}}
 .noscript-trick{display:block}.js .noscript-trick{display:none}
 .trick-ui{display:none}.js .trick-ui{display:block}
 @media (prefers-reduced-motion:reduce){.title h1,.hero img,.twinkle b{animation:none}.title h1{color:var(--gold-2);background:none}}
@@ -215,6 +246,27 @@ html,body{overflow-x:hidden}
     <h1>One Night at the Magic Castle</h1>
     <p>Seven friends, one secret bookcase, close-up miracles before Ehrlich takes the big stage, and dinner in a 1909 mansion run by magicians.</p>
   </div>
+
+
+  <section id="mason-arrives">
+    <h2>Mason Arrives, 7:30</h2>
+    <div class="marquee">
+      <div class="bulbs" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="sc">Now entering the Castle</div>
+      <div class="clock" id="mclock">7:30 PM</div>
+      <p class="under" id="munder">The curtain rises for Mason.</p>
+    </div>
+    <div class="stage" id="mstage">
+      <div class="mcard" aria-hidden="true"><div class="b"></div><div class="f"><div><b>A&hearts;</b><span>Mason</span></div></div></div>
+      <svg class="mhat" viewBox="0 0 120 110" aria-hidden="true"><ellipse cx="60" cy="98" rx="56" ry="11" fill="#140d09"/><path d="M26 98 L32 18 Q60 8 88 18 L94 98 Z" fill="#1d1410"/><path d="M29 78 L91 78 L92 90 L28 90 Z" fill="#e0b04f"/><ellipse cx="60" cy="18" rx="28" ry="7" fill="#2b1f18"/></svg>
+    </div>
+    <div class="welcome" id="mwelcome">
+      <p class="big">Out of the whole deck, the Castle saved its best card for 7:30.</p>
+      <p>Mason, every trick before you walked in was the warm-up. The bookcase knows your name, Irma is limbering up at the piano, and there is a seat at our table that has been waiting all night.</p>
+      <p>Main character energy: confirmed. Welcome in.</p>
+    </div>
+    <p style="text-align:center;margin-top:14px"><button class="say" id="mgo"><span class="wand">&#129668;</span> Wave the wand for Mason</button></p>
+  </section>
 
   <section>
     <h2>Your Night, as a Hand of Cards</h2>
@@ -462,6 +514,14 @@ html,body{overflow-x:hidden}
     setTimeout(function(){ chime(); hrev.textContent='Every hat has a rabbit.'; hstep.textContent='At the Castle, you can never lose.'; hgo.textContent='Shuffle again'; hst=0; },800);
   });
   slots.forEach(function(sl){ sl.addEventListener('click',function(){ if(hst!==2) return; hst=3; lift(sl); hstep.textContent='You found him!'; hrev.textContent='Sharp eyes.'; hgo.disabled=false; hgo.hidden=false; hgo.textContent='Lift the other two'; }); });
+
+  /* Mason's entrance: countdown to 7:30 PM PT, then the card rises */
+  var mstage=document.getElementById('mstage'),mgo=document.getElementById('mgo'),mclock=document.getElementById('mclock'),munder=document.getElementById('munder'),mwel=document.getElementById('mwelcome'),T=Date.UTC(2026,9,13,2,30),cel=false;
+  function doves(){ if(reduce) return; for(var i=0;i<9;i++){ (function(i){ setTimeout(function(){ var d=document.createElement('span'); d.className='dove'; d.textContent=i%3?'✨':'🕊️'; var r=mstage.getBoundingClientRect(); d.style.left=(r.left+r.width/2-13+(Math.random()*120-60))+'px'; d.style.top=(r.top+60)+'px'; d.style.setProperty('--dx',(Math.random()*240-120)+'px'); d.style.setProperty('--r',(Math.random()*60-30)+'deg'); document.body.appendChild(d); setTimeout(function(){ d.remove(); },3400); },i*140); })(i); } }
+  function reveal(){ mstage.classList.add('lift'); mwel.classList.add('on'); var r=mstage.getBoundingClientRect(); burst(r.left+r.width/2,r.top+r.height*.35,70); setTimeout(function(){ burst(r.left+r.width*.2,r.top+r.height*.3,30); burst(r.left+r.width*.8,r.top+r.height*.3,30); },500); [523,659,784,1047,1319,1568].forEach(function(f,i){ tone(f,i*.13,1.4,'triangle',.045); }); setTimeout(chime,900); doves(); mgo.innerHTML='<span class="wand">&#129668;</span> Once more, for Mason'; }
+  mgo.addEventListener('click',function(){ mgo.classList.add('wave'); setTimeout(function(){ mgo.classList.remove('wave'); },900); if(mstage.classList.contains('lift')){ mstage.classList.remove('lift'); setTimeout(reveal,700); } else reveal(); });
+  function mtick(){ var ms=T-Date.now(); if(ms>0){ var h=Math.floor(ms/3600000),m=Math.floor(ms/60000)%60,sec=Math.floor(ms/1000)%60; mclock.textContent=(h?h+':':'')+(h&&m<10?'0':'')+m+':'+(sec<10?'0':'')+sec; munder.textContent='until the curtain rises for Mason, 7:30 PM.'; setTimeout(mtick,1000); } else { mclock.textContent='He’s here!'; munder.textContent='Mason is in the building. Wave the wand.'; if(!cel && ms>-3*3600000){ cel=true; } } }
+  mtick();
 
   var tabs=[].slice.call(document.querySelectorAll('.tabs button'));
   tabs.forEach(function(b){ b.addEventListener('click',function(){ tabs.forEach(function(x){ x.setAttribute('aria-selected',x===b?'true':'false'); }); document.querySelectorAll('.invite').forEach(function(a){ a.classList.toggle('on',a.id===b.dataset.t); }); tone(740,0,.3,'triangle',.04); }); });
